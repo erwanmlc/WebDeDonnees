@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <!-- Importation du schéma util.xsd -->
+    <xs:redefine schemaLocation="util.xsd">
+
+        <xs:group name="locationGroup">
+            <xs:choice>
+                <xs:sequence>
+                    <xs:element ref="ville" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="pays" minOccurs="0" maxOccurs="1" />
+                </xs:sequence>
+                <xs:sequence>
+                    <xs:element ref="pays" minOccurs="0" maxOccurs="1" />
+                    <xs:element ref="ville" minOccurs="1" maxOccurs="1" />
+                </xs:sequence>
+            </xs:choice>
+        </xs:group>
+
+    </xs:redefine>
+
+    <xs:complexType name="PersonneType">
+        <xs:sequence>
+            <xs:group ref="PersonneGroup" />
+            <xs:element ref="naissance" minOccurs="0" />
+            <xs:element ref="mort" minOccurs="0" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:group name="PersonneGroup">
+        <xs:sequence>
+            <xs:element ref="prenom" minOccurs="1" maxOccurs="4" />
+            <xs:element ref="nom" minOccurs="1" maxOccurs="3" />
+            <xs:element ref="adresse" minOccurs="0" maxOccurs="3" />
+        </xs:sequence>
+    </xs:group>
+
+    <xs:complexType name="DateLieuType" mixed="true">
+        <xs:sequence>
+            <xs:element name="date">
+                <xs:simpleType>
+                    <xs:restriction base="xs:date">
+                        <xs:minInclusive value="1000-01-01" />
+                        <xs:maxInclusive value="2023-12-31" />
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:group ref="locationGroup" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="personne" type="PersonneType" />
+    <xs:element name="ville" type="PlaceNameType" />
+    <xs:element name="pays" type="PlaceNameType" />
+    <xs:element name="nom" type="NameType" />
+    <xs:element name="prenom" type="FirstNameType" />
+    <xs:element name="voie" type="PathType" />
+    <xs:element name="numero" type="NumberType" />
+    <xs:element name="adresse" type="AdressType" />
+    <xs:element name="naissance" type="DateLieuType" />
+    <xs:element name="mort" type="DateLieuType" />
+
+</xs:schema>

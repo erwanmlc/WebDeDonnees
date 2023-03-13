@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:redefine schemaLocation="personne.xsd">
+
+        <!-- Redéfinition du groupe lié au type PersonneType pour supprimer l'élément adresse -->
+        <xs:group name="PersonneGroup">
+            <xs:sequence>
+                <xs:element ref="prenom" minOccurs="1" maxOccurs="4" />
+                <xs:element ref="nom" minOccurs="1" maxOccurs="3" />
+            </xs:sequence>
+        </xs:group>
+
+    </xs:redefine>
+
+
+    <!-- Définition du type lié au film -->
+    <xs:complexType name="FilmType">
+        <xs:sequence>
+            <xs:element ref="titre" minOccurs="1" maxOccurs="2" />
+            <xs:element ref="sortie" minOccurs="1" maxOccurs="2" />
+            <xs:element ref="realisateur" minOccurs="1" maxOccurs="10" />
+            <xs:element ref="acteurs" />
+            <xs:element ref="genre" />
+            <xs:element ref="durée" />
+            <xs:element ref="synopsis" />
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <!-- Définition du type lié au titre -->
+    <xs:simpleType name="TitreType">
+        <xs:restriction base="xs:normalizedString">
+            <xs:minLength value="2" />
+            <xs:maxLength value="300" />
+        </xs:restriction>
+    </xs:simpleType>
+
+
+    <!-- Définition du type lié aux dates de sortie -->
+    <xs:complexType name="SortieType">
+        <xs:all>
+            <xs:element name="jour" type="xs:gDay" />
+            <xs:element name="mois" type="xs:gMonth" />
+            <xs:element name="an" type="xs:gYear" />
+        </xs:all>
+        <xs:attribute name="pays" type="PlaceNameType" />
+    </xs:complexType>
+
+
+    <!-- Définition des types liés au genre -->
+    <xs:complexType name="GenreType">
+        <xs:simpleContent>
+            <xs:extension base="GenreDomain">
+                <xs:attribute name="autre-genre" type="AttributeGenreDomain" use="optional" />
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="GenreDomain">
+        <xs:restriction base="xs:normalizedString">
+            <xs:enumeration value="animation" />
+            <xs:enumeration value="film biographique" />
+            <xs:enumeration value="comedie" />
+            <xs:enumeration value="documentaire" />
+            <xs:enumeration value="drame" />
+            <xs:enumeration value="science-fiction" />
+            <xs:enumeration value="guerre" />
+            <xs:enumeration value="historique" />
+            <xs:enumeration value="policier" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="AttributeGenreDomain">
+        <xs:restriction base="xs:normalizedString">
+            <xs:enumeration value="sport" />
+            <xs:enumeration value="politique" />
+            <xs:enumeration value="musicale" />
+            <xs:enumeration value="horreur" />
+            <xs:enumeration value="aventure" />
+            <xs:enumeration value="fantastique" />
+            <xs:enumeration value="dramatique" />
+            <xs:enumeration value="thriller" />
+        </xs:restriction>
+    </xs:simpleType>
+
+
+    <!-- Définition des types liés à la durée -->
+    <xs:complexType name="TempsType">
+        <xs:attributeGroup ref="tempsGroup" />
+    </xs:complexType>
+
+    <xs:attributeGroup name="tempsGroup">
+        <xs:attribute name="heure" type="HeureType" />
+        <xs:attribute name="minutes" type="MinuteType" />
+    </xs:attributeGroup>
+
+    <xs:simpleType name="HeureType">
+        <xs:restriction base="xs:nonNegativeInteger">
+            <xs:maxInclusive value="30" />
+            <xs:totalDigits value="2" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="MinuteType">
+        <xs:restriction base="xs:nonNegativeInteger">
+            <xs:maxInclusive value="60" />
+            <xs:totalDigits value="2" />
+        </xs:restriction>
+    </xs:simpleType>
+
+
+    <!-- Définition des types liés au synopsis -->
+    <xs:complexType name="SynopsisType" mixed="true">
+    </xs:complexType>
+
+
+    <!-- Définition du type pour la liste d'éléments acteur de l'élément acteurs -->
+    <xs:complexType name="ActeursType">
+        <xs:sequence>
+            <xs:element ref="acteur" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ActeurType">
+        <xs:complexContent>
+            <xs:extension base="PersonneType"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <!-- Définition des élements -->
+    <xs:element name="titre" type="TitreType" />
+    <xs:element name="sortie" type="SortieType" />
+    <!-- Définition des éléments acteur, acteurs et realisateur substituant à l'élement personne qui
+    est de type PersonneType -->
+    <xs:element name="acteur" substitutionGroup="personne" type="ActeurType" />
+    <xs:element name="acteurs" type="ActeursType" />
+    <xs:element name="realisateur" substitutionGroup="personne" />
+    <xs:element name="genre" type="GenreType" />
+    <xs:element name="durée" type="TempsType" />
+    <xs:element name="synopsis" type="SynopsisType" />
+
+
+</xs:schema>

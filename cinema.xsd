@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:import schemaLocation="CNCFilm.xsd"/>
+
+    <xs:complexType name="CinemaType">
+        <xs:sequence>
+          <xs:element ref="nom" />
+          <xs:element name="adresse" type="xs:string"/>
+          <xs:element name="salle" type="SalleType" minOccurs="1" maxOccurs="40"/>
+          <xs:element name="film" type="TitreFilmType" minOccurs="1" maxOccurs="200"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SalleType">
+        <xs:sequence>
+            <xs:element name="seance" type="SeanceType" minOccurs="1" maxOccurs="7"/>
+        </xs:sequence>
+        <xs:attributeGroup name="SalleGroup">
+            <xs:attribute name="num" type="NumType" use="required"/>
+            <xs:attribute name="place" type="PlaceType" use="required"/>
+            </xs:attributeGroup>
+        <xs:attributeGroup ref="xml:id"/>
+    </xs:complexType>
+
+    
+</xs:schema>

@@ -1,0 +1,90 @@
+<film xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="CNCFilm.xsd">
+    <titre sous-titre="La relève de Rocky Balboa">Creed 3</titre>
+    <sortie pays="Etats-Unis">
+        <jour>---03</jour>
+        <mois>--03</mois>
+        <an>2023</an>
+    </sortie>
+    <sortie pays="France">
+        <jour>---01</jour>
+        <mois>--03</mois>
+        <an>2023</an>
+    </sortie>
+    <realisateur>
+        <prenom>Michael</prenom>
+        <prenom>Bakari</prenom>
+        <nom>Jordan</nom>
+    </realisateur>
+    <acteurs>
+        <acteur>
+            <prenom>Michael</prenom>
+            <prenom>Bakari</prenom>
+            <nom>Jordan</nom>
+            <personnage profession="Boxeur">
+                <prenom>Adonis</prenom>
+                <nom>Creed</nom>
+            </personnage>
+        </acteur>
+        <acteur>
+            <prenom>Tessa</prenom>
+            <nom>Thompson</nom>
+            <personnage profession="Boxeur">
+                <prenom>Bianca</prenom>
+            </personnage>
+        </acteur>
+        <acteur>
+            <prenom>Jonathan</prenom>
+            <nom>Majors</nom>
+            <personnage profession="Boxeur">
+                <prenom>Damian</prenom>
+                <nom>Anderson</nom>
+            </personnage>
+        </acteur>
+    </acteurs>
+    <genre autre-genre="sport">drame</genre>
+    <durée heure="02" minutes="00" />
+    <synopsis>
+Neuvième film de la série <titre>Rocky</titre>,
+il fait suite à <film>Creed 2</film> de <realisateur>
+    <prenom>Steven</prenom> 
+    <nom>Caple Junior</nom></realisateur>, sorti en <date>2018</date>. <acteur>
+        <prenom>Michael</prenom> 
+        <prenom>Bakari</prenom> 
+        <nom>Jordan</nom></acteur>
+        y reprend son rôle d'<personnage>
+            <prenom>Adonis</prenom>
+            <nom>Creed</nom>
+        </personnage>  et officie pour la première fois de sa 
+    carrière comme réalisateur. Par ailleurs c'est le premier film de la saga 
+        où <acteur>
+            <prenom>Sylvester</prenom> 
+            <nom>Stallone</nom></acteur> ne reprend pas son rôle de <personnage>
+                <prenom>Rocky</prenom>
+                <nom>Balboa</nom>
+            </personnage>.  
+            À <ville>Los Angeles</ville> en <date>2002</date>, <personnage>
+                <prenom>Adonis</prenom>
+                <nom>Creed</nom> </personnage> traîne souvent en ville avec son ami <personnage>
+                    <prenom>Damian</prenom>
+                    <nom>Anderson</nom>
+                </personnage>.
+    Ce dernier, boxeur émérite, remporte de nombreux combats. 
+    Mais à la suite d'une agression violente devant une supérette, leurs chemins se séparent, Damian étant emprisonné. 
+    
+                Vingt ans plus tard,<personnage><prenom>Adonis</prenom></personnage>, a pris sa retraite. Il est désormais à la tête d'un empire, prenant
+                sous son aile de jeunes boxeurs pour organiser des combats à forts enjeux médiatiques,
+                tout en s'occupant avec sa femme, <personnage>
+                    <prenom>Bianca</prenom>
+                </personnage>, de leur fille <personnage><prenom>Amara</prenom></personnage> 
+                sourde de naissance avec qui il communique en langue des signes.
+                
+                Alors que <personnage>
+                    <prenom>Damian</prenom>
+                </personnage> désire plus que tout prouver sa valeur en tant que boxeur, 
+                <personnage>
+                    <prenom>Adonis</prenom>
+                </personnage> va faire des choix qui vont inévitablement pousser les deux anciens amis
+                à s'affronter sur le ring pour le titre de champion du monde.   
+</synopsis>
+</film>

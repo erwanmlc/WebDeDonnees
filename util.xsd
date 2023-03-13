@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:annotation>
+        <xs:documentation>Ce type permet de tester tous les types d'éléments définis dans ce schéma:
+            DateType_F, LieuNameType, TelephoneType, VoieType, NaissanceType, CodeType, NumeroType,
+            AdresseType</xs:documentation>
+    </xs:annotation>
+    <xs:element name="test" type="TestType" />
+    <xs:complexType name="TestType">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <!-- <xs:element ref="city" />
+            <xs:element ref="country" />
+            <xs:element ref="lastName" />
+            <xs:element ref="firstName" />
+            <xs:element ref="code" />
+            <xs:element ref="path" />
+            <xs:element ref="number" />
+            <xs:element ref="address"/> -->
+            <xs:any />
+        </xs:choice>
+    </xs:complexType>
+
+
+    <!-- Définition des éléments de base -->
+
+
+    <xs:element name="city" type="PlaceNameType" />
+    <xs:element name="country" type="PlaceNameType" />
+    <xs:element name="lastName" type="NameType" />
+    <xs:element name="firstName" type="FirstNameType" />
+    <xs:element name="code" type="CodeType" />
+    <xs:element name="path" type="PathType" />
+    <xs:element name="number" type="NumberType" />
+    <xs:element name="address" type="AdressType" />
+
+    <xs:annotation>
+        <xs:documentation> PlaceNameType : caractérise une ville (city), un pays (country), c'est
+            une chaîne de caractères normalisée d’au moins 2 caractères et pouvant comporter de 1 à
+            4 mots. Par exemple: Paris, Lo, Villeneuve sur lot, Saint Faust du haut, France, Corée
+            du Sud. Contraintes : premier mot commence par une majuscule (M) suivie de minuscule (m)
+            il peut y avoir 0 à 3 autres mots les autres mots commence par une M ou une m et suivi
+            par des m </xs:documentation>
+    </xs:annotation>
+
+
+    <xs:simpleType name="PlaceNameType">
+        <xs:restriction base="xs:token">
+            <xs:pattern value="\p{Lu}\p{Ll}+((\s|-)\p{L}\p{Ll}+){0,3}" />
+            <xs:minLength value="2" />
+            <xs:maxLength value="50" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:annotation>
+        <xs:documentation> NameType : caractérise le nom d’une personne (lastName), il dérivé de
+            normalizedString qui admet au plus 60 caractères et permet d’accepter les noms suivants
+            : Sartre, Lehane, Pourroy de L'Auberivière de Quinsonas-Oudinot de Reggio, Bertrand de
+            Beauvoir. </xs:documentation>
+    </xs:annotation>
+    <xs:simpleType name="NameType">
+        <xs:restriction base="xs:normalizedString">
+            <xs:whiteSpace value="replace" />
+            <xs:pattern
+                value="\p{Lu}\p{Ll}+((\s|\sde\s|\sde\sLa\s|\sde\sL'|\sdu\s|-)(\p{Lu})(\p{Ll}+)){0,7}" />
+            <xs:maxLength value="60" />
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- A Hawai, des parents ont choisi pour leur fille un drôle de prénom (102 lettres+23 blancs): 
+Napu AmoHalla Ona Ona Aneka Vehi Vehi Ona Hivea Nena Vava Keho Onka Kahe HeaLeka Ea Ona Ney Nana
+    Nia Keko Oa Oga Vanao.-->
+    <!-- Li Ming , Antonio-Manuel , Maélys-->
+    <xs:simpleType name="FirstNameType">
+        <xs:restriction base="xs:normalizedString">
+            <xs:pattern value="\p{Lu}(\p{L})+((-|\s)\p{Lu}\p{L}+){0,30}" />
+            <xs:maxLength value="200" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:annotation>
+        <xs:documentation> country et city sont de type PlaceNameType et sont définis dans un groupe
+            LocationGroup, ils sont obligatoirement présents et peuvent être mis dans un ordre
+            quelconque </xs:documentation>
+    </xs:annotation>
+    <xs:group name="locationGroup">
+        <xs:choice>
+            <xs:sequence>
+                <xs:element ref="city" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="country" minOccurs="1" maxOccurs="1" />
+            </xs:sequence>
+            <xs:sequence>
+                <xs:element ref="country" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="city" minOccurs="1" maxOccurs="1" />
+            </xs:sequence>
+        </xs:choice>
+    </xs:group>
+
+    <!-- 
+	le code postal est un nombre de 5 caractères allant de 01000 à 98899
+	exemple : 01000 BOURG EN BRESSE,  98890 PAITA, 
+	988 représentant le code de la Nouvelle Calédonie
+	01 Ain ... 95 Val d Oise
+	971 Guadeloupe 972 Martinique 973 Guyane 974 Reunion
+	975 St-Pierre-et-Miquelon 976 Mayotte
+	986 Wallis et Futuna 987 Polynesie Francaise 988 Nouvelle-Caledonie
+	-->
+    <xs:simpleType name="CodeType">
+        <xs:restriction base="xs:positiveInteger">
+            <xs:minInclusive value="01000" />
+            <xs:pattern value="[0-8]\d{4}" />
+            <xs:pattern value="9[0-5]\d{3}" />
+            <xs:pattern value="97[1-6]\d{2}" />
+            <xs:pattern value="98[6-8]\d{2}" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- NumeroType est un type simple compris entre [1,9999]
+unsignedShort  0 to 65535 -->
+    <xs:simpleType name="NumberType">
+        <xs:restriction base="xs:unsignedShort">
+            <xs:minInclusive value="1" />
+            <xs:maxExclusive value="9999" />
+            <xs:pattern value="\d{1,4}" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- 2.	La voie est de type VoieType qui est un type simple 
+	commençant par un des mots  rue ou avenue ou impasse ou boulevard 
+	suivi du nom de la voir qui est défini par au minimum un mot et au maximum 4 mots.
+Exemples : rue Lamartine, boulevard De Lattre De Tassigny.
+	-->
+    <xs:simpleType name="VoieCategorieType">
+        <xs:restriction base="xs:normalizedString">
+            <xs:pattern value="(rue|avenue|impasse|boulevard|place)\s" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="VoieType">
+        <xs:union memberTypes="VoieCategorieType PlaceNameType" />
+    </xs:simpleType>
+
+    <xs:annotation>
+        <xs:documentation> PathType qui caractérise une voie (path) dérive du type normalizedString
+            qui commence par un des mots rue ou avenue ou impasse ou boulevard suivi du nom de la
+            voie qui est défini par au minimum un mot et au maximum 4 mots. Par exemples : rue
+            Lamartine, boulevard De Lattre De Tassigny, impasse de la foire, avenue Voltaire. </xs:documentation>
+    </xs:annotation>
+
+
+    <xs:simpleType name="PathType">
+        <xs:restriction base="xs:normalizedString">
+            <xs:pattern value="(rue|avenue|impasse|boulevard|place)(\s\p{L}\p{Ll}+){1,4}" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:annotation>
+        <xs:documentation> L’addresse d’une personne (address) est composée d’un numéro d’une voie,
+            d’un code postal d’une ville et d’un pays. Définissez les éléments suivants : a. Le code
+            postal compris dans une addresse suit la nomenclature française. CodeType est un entier
+            de 5 caractères allant de 01000 à 98899 exemple : 01000 BOURG EN BRESSE, 98890 PAITA où
+            988 représentant le code de la Nouvelle Calédonie, 01 ceux de Ain ... 95 Val d Oise, 971
+            celui de la Guadeloupe, 972 celui de la Martinique, 973 celui de la Guyane , 974 celui
+            de la Reunion, 975 celui de St-Pierre-et-Miquelon 976 celui de Mayotte, 986 celui de
+            Wallis et Futuna, 987 celui de la Polynésie Française et 988 celui de la
+            Nouvelle-Caledonie. Attention !!! il n’y a pas de code qui commence par 96XXX, ni de
+            code qui commence par 977XX, 978XX et 979XX, ni de code qui commence par 981XX, 982XX,
+            983XX, 984XX et 985XX b. NumberType qui caractérise le numéro dans la voie (number) est
+            un type simple compris entre 1 et 9999. c. PathType qui caractérise une voie (path)
+            dérive du type normalizedString qui commence par un des mots rue ou avenue ou impasse ou
+            boulevard suivi du nom de la voie qui est défini par au minimum un mot et au maximum 4
+            mots. Par exemples : rue Lamartine, boulevard De Lattre De Tassigny, impasse de la
+            foire, avenue Voltaire. d. country et city sont de type PlaceNameType et sont définis
+            dans un groupe LocationGroup, ils sont obligatoirement présents et peuvent être mis dans
+            un ordre quelconque. </xs:documentation>
+    </xs:annotation>
+    <xs:complexType name="AdressType">
+        <xs:sequence minOccurs="1" maxOccurs="5">
+            <xs:element ref="number" minOccurs="0" maxOccurs="1" />
+            <xs:element ref="path" minOccurs="0" maxOccurs="1" />
+            <xs:element ref="code" minOccurs="0" maxOccurs="1" />
+            <xs:group ref="locationGroup" />
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

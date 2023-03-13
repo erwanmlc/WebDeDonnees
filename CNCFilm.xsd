@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:redefine schemaLocation="film.xsd">
+
+        <!-- Redéfinition du du type FilmType permettant l'ajout d'un attribut sous-titre -->
+        <xs:complexType name="FilmType">
+            <xs:complexContent>
+                <xs:extension base="FilmType">
+                    <xs:attribute name="sous-titre" type="TitreType" use="optional" />
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+
+        <!-- Redéfinition du du type TitreType permettant l'utilisation de titre senscritique -->
+        <xs:simpleType name="TitreType">
+            <xs:restriction base="TitreType">
+                <xs:maxLength value="300" />
+                <xs:minLength value="2" />
+                <xs:pattern value="[A-ZÀ-ÖØ-Þ0-9][\p{L}0-9' -,.?!]*(:?\s[\p{L}0-9' -,.?!]{1,15}){0,29}(!|\?)?" />
+                <xs:pattern value="[Ll]'\s[A-Z][\p{L}0-9' -?!]*(:?\s[\p{L}0-9' -,.?!]{1,15}){0,29}(!|\?)?" />
+            </xs:restriction>
+        </xs:simpleType>
+
+
+        <xs:complexType name="ActeurType">
+            <xs:complexContent>
+                <xs:extension base="ActeurType">
+                    <xs:sequence>
+                        <xs:element name="personnage" type="PersonnageType" minOccurs="0" maxOccurs="10" />
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+
+    </xs:redefine>
+
+    <xs:complexType name="PersonnageType">
+        <xs:complexContent>
+            <xs:restriction base="PersonneType">
+                <xs:sequence>
+                    <xs:element ref="nom" minOccurs="0" maxOccurs="2" />
+                    <xs:element ref="surnom" minOccurs="0" maxOccurs="1" />
+                    <xs:element ref="fonction" minOccurs="0" maxOccurs="1" />
+                </xs:sequence>
+                <xs:attribute name="profession" type="xs:normalizedString" use="optional" />
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:element name="personnage" substitutionGroup="personne" type="PersonnageType" />
+    <xs:element name="surnom" type="xs:normalizedString" />
+    <xs:element name="fonction" type="xs:normalizedString" />
+    <xs:element name="profession" type="xs:normalizedString" />
+
+</xs:schema>
