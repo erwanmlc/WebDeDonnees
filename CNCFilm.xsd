@@ -9,7 +9,7 @@
             <xs:complexContent>
                 <xs:restriction base="FilmType">
                     <xs:sequence>
-                        <xs:element ref="titreAtt" />
+                        <xs:element ref="titre" />
                     </xs:sequence>
                 </xs:restriction>
             </xs:complexContent>
@@ -36,13 +36,11 @@
             </xs:complexContent>
         </xs:complexType>
 
-        <xs:complexType name="TitreAttType" mixed="true">
-            <xs:simpleContent>
-                <xs:extension base="TitreType">
-                    <xs:attribute name="sous-titre" type="TitreType" use="optional" />
-                </xs:extension>
-            </xs:simpleContent>
-        </xs:complexType>
+        <xs:simpleType name="TitreAttType">
+            <xs:restriction base="TitreType">
+            </xs:restriction>
+            <xs:attribute name="sous-titre" type="TitreType" use="optional" />
+        </xs:simpleType>
 
     </xs:redefine>
 
@@ -54,7 +52,7 @@
                     <xs:element ref="surnom" minOccurs="0" maxOccurs="1" />
                     <xs:element ref="fonction" minOccurs="0" maxOccurs="1" />
                 </xs:sequence>
-                <xs:attribute name="profession" type="xs:normalizedString" use="optional" />
+                <!--<xs:attribute name="profession" type="xs:normalizedString" use="optional" />-->
             </xs:restriction>
         </xs:complexContent>
     </xs:complexType>
@@ -63,6 +61,6 @@
     <xs:element name="surnom" type="xs:normalizedString" />
     <xs:element name="fonction" type="xs:normalizedString" />
     <xs:element name="profession" type="xs:normalizedString" />
-    <xs:element name="titreAtt" type="TitreAttType" />
+    <xs:element name="titre" type="TitreAttType" />
 
 </xs:schema>
