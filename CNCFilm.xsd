@@ -48,11 +48,12 @@
         <xs:complexContent>
             <xs:restriction base="PersonneType">
                 <xs:sequence>
+                    <xs:element ref="prenom" minOccurs="1" maxOccurs="4" />
                     <xs:element ref="nom" minOccurs="0" maxOccurs="2" />
                     <xs:element ref="surnom" minOccurs="0" maxOccurs="1" />
                     <xs:element ref="fonction" minOccurs="0" maxOccurs="1" />
                 </xs:sequence>
-                <!--<xs:attribute name="profession" type="xs:normalizedString" use="optional" />-->
+                <xs:attribute name="profession" type="xs:normalizedString" use="optional" />
             </xs:restriction>
         </xs:complexContent>
     </xs:complexType>
